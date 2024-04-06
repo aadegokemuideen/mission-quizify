@@ -47,6 +47,9 @@ class DocumentProcessor:
             # Allow only type `pdf`
             # Allow multiple PDFs for ingestion
             #####################################
+            "upload a PDF file",
+            type=["pdf"],
+            accept_multiple_files=True
         )
         
         if uploaded_files is not None:
@@ -56,6 +59,7 @@ class DocumentProcessor:
                 original_name, file_extension = os.path.splitext(uploaded_file.name)
                 temp_file_name = f"{original_name}_{unique_id}{file_extension}"
                 temp_file_path = os.path.join(tempfile.gettempdir(), temp_file_name)
+                
 
                 # Write the uploaded PDF to a temporary file
                 with open(temp_file_path, 'wb') as f:
@@ -66,15 +70,26 @@ class DocumentProcessor:
                 # Use PyPDFLoader here to load the PDF and extract pages.
                 # https://python.langchain.com/docs/modules/data_connection/document_loaders/pdf#using-pypdf
                 # You will need to figure out how to use PyPDFLoader to process the temporary file.
+
+                # Create an instance of PyPDFLoader and load document
+                pdf_file_loader = PyPDFLoader(temp_file_path)
+                
+                # Extract pages
+                pages = pdf_file_loader.load_and_split()  #this load pages and split by pages.
+                #pages = pdf_file_loader.get_pages()
+                
+
                 
                 # Step 3: Then, Add the extracted pages to the 'pages' list.
                 #####################################
+                self.pages.extend(pages)
                 
                 # Clean up by deleting the temporary file.
                 os.unlink(temp_file_path)
             
             # Display the total number of pages processed.
             st.write(f"Total pages processed: {len(self.pages)}")
+            #print(self.pages)
         
 if __name__ == "__main__":
     processor = DocumentProcessor()

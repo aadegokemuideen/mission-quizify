@@ -82,14 +82,16 @@ class DocumentProcessor:
                 
                 # Step 3: Then, Add the extracted pages to the 'pages' list.
                 #####################################
-                self.pages.extend(pages)
+                for _ , page in enumerate(pages):
+                    
+                    self.pages.append(page.page_content) ## if I want to extract meta data,used page.metadata.
                 
                 # Clean up by deleting the temporary file.
                 os.unlink(temp_file_path)
             
             # Display the total number of pages processed.
             st.write(f"Total pages processed: {len(self.pages)}")
-            #print(self.pages)
+            #print(page.metadata)
         
 if __name__ == "__main__":
     processor = DocumentProcessor()

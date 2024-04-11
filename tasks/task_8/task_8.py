@@ -2,6 +2,7 @@ import streamlit as st
 import os
 import sys
 import json
+import string
 sys.path.append(os.path.abspath('../../'))
 from tasks.task_3.task_3 import DocumentProcessor
 from tasks.task_4.task_4 import EmbeddingClient
@@ -71,6 +72,8 @@ class QuizGenerator:
             temperature = 0.8, # Increased for less deterministic questions 
             max_output_tokens = 500
         )
+        # project = "radicalai",
+        # location = "europe-west2",
 
     def generate_question_with_vectorstore(self):
         """
@@ -125,24 +128,34 @@ class QuizGenerator:
 
         for _ in range(self.num_questions):
             ##### YOUR CODE HERE #####
-            question_str = # Use class method to generate question
+            question_str = self.generate_question_with_vectorstore()# Use class method to generate question
             
             ##### YOUR CODE HERE #####
             try:
                 # Convert the JSON String to a dictionary
+                question = json.loads(question_str)
             except json.JSONDecodeError:
                 print("Failed to decode question JSON.")
                 continue  # Skip this iteration if JSON decoding fails
             ##### YOUR CODE HERE #####
-
+            
             ##### YOUR CODE HERE #####
             # Validate the question using the validate_question method
             if self.validate_question(question):
                 print("Successfully generated unique question")
                 # Add the valid and unique question to the bank
+                self.question_bank.append(question)
             else:
                 print("Duplicate or invalid question detected.")
             ##### YOUR CODE HERE #####
+                while not self.validate_question(question):
+                    question_str = self.generate_question_with_vectorstore()
+                    try:
+                    # Convert the JSON String to a dictionary
+                        question = json.loads(question_str)
+                    except json.JSONDecodeError:
+                        print("Failed to decode question JSON.")
+                        continue  # Skip this iteration if JSON decoding fails
 
         return self.question_bank
 
@@ -170,6 +183,15 @@ class QuizGenerator:
         # Consider missing 'question' key as invalid in the dict object
         # Check if a question with the same text already exists in the self.question_bank
         ##### YOUR CODE HERE #####
+        quest = question['question']
+        for q in self.question_bank:
+           # q = q['question'].lower().strip().translate(str.maketrans('', '', string.punctuation))
+           # quest = quest.lower().strip().translate(str.maketrans('', '', string.punctuation))
+            if q['question'] == quest:
+                print(q = quest)
+                is_unique = False
+                return is_unique
+        is_unique = True
         return is_unique
 
 
@@ -178,8 +200,8 @@ if __name__ == "__main__":
     
     embed_config = {
         "model_name": "textembedding-gecko@003",
-        "project": "YOUR-PROJECT-ID-HERE",
-        "location": "us-central1"
+        "project": "radicalai",
+        "location": "europe-west2"
     }
     
     screen = st.empty()
@@ -209,9 +231,10 @@ if __name__ == "__main__":
                 st.write(topic_input)
                 
                 # Test the Quiz Generator
-                generator = QuizGenerator(topic_input, questions, chroma_creator)
+                generator = QuizGenerator(topic_input, questions, chroma_creator.db)
                 question_bank = generator.generate_quiz()
                 question = question_bank[0]
+                print(question_bank)
 
     if question_bank:
         screen.empty()

@@ -4,6 +4,7 @@ from langchain_core.prompts import PromptTemplate
 import os
 import sys
 sys.path.append(os.path.abspath('../../'))
+import json
 
 class QuizGenerator:
     def __init__(self, topic=None, num_questions=1, vectorstore=None):
@@ -58,11 +59,7 @@ class QuizGenerator:
         Overview:
         This method prepares the LLM for generating quiz questions by configuring essential parameters such as the model name, temperature, and maximum output tokens. The LLM will be used later to generate quiz questions based on the provided topic and context retrieved from the vectorstore.
 
-        Steps:
-        1. Set the LLM's model name to "gemini-pro" 
-        2. Configure the 'temperature' parameter to control the randomness of the output. A lower temperature results in more deterministic outputs.
-        3. Specify 'max_output_tokens' to limit the length of the generated text.
-        4. Initialize the LLM with the specified parameters to be ready for generating quiz questions.
+        
 
         Implementation:
         - Use the VertexAI class to create an instance of the LLM with the specified configurations.
@@ -72,7 +69,14 @@ class QuizGenerator:
         """
         self.llm = VertexAI(
             ############# YOUR CODE HERE ############
+            model_name = "gemini-pro",
+            project = "radicalai",
+            location = "europe-west2",
+            temperature = 0.7,  # Step 2: Configure the 'temperature' parameter
+            max_output_tokens = 400  # Step 3: Specify the 'max_output_tokens' within the recommended range
         )
+
+        
         
     def generate_question_with_vectorstore(self):
         """
@@ -103,6 +107,10 @@ class QuizGenerator:
         # Initialize the LLM from the 'init_llm' method if not already initialized
         # Raise an error if the vectorstore is not initialized on the class
         ############# YOUR CODE HERE ############
+        if self.llm is None:
+            self.init_llm() # initialize init_llm method LLM = 
+        if self.vectorstore is None:
+           raise ValueError("VectorStore is not initialized. Please initialize the VectorStore.")
         
         from langchain_core.runnables import RunnablePassthrough, RunnableParallel
 
@@ -110,11 +118,16 @@ class QuizGenerator:
         # Enable a Retriever using the as_retriever() method on the VectorStore object
         # HINT: Use the vectorstore as the retriever initialized on the class
         ############# YOUR CODE HERE ############
+        retriever = self.vectorstore.as_retriever()  #.query_chroma_collection()    # as_retriever()
+        
+            
         
         ############# YOUR CODE HERE ############
         # Use the system template to create a PromptTemplate
         # HINT: Use the .from_template method on the PromptTemplate class and pass in the system template
         ############# YOUR CODE HERE ############
+        #prompt_template = PromptTemplate(self.system_template) #this i constructor method it work similar to this
+        prompt_template = PromptTemplate.from_template(self.system_template)
         
         # RunnableParallel allows Retriever to get relevant documents
         # RunnablePassthrough allows chain.invoke to send self.topic to LLM
@@ -126,6 +139,7 @@ class QuizGenerator:
         # Create a chain with the Retriever, PromptTemplate, and LLM
         # HINT: chain = RETRIEVER | PROMPT | LLM 
         ############# YOUR CODE HERE ############
+        chain = setup_and_retrieval | prompt_template | self.llm  #LLM
 
         # Invoke the chain with the topic as input
         response = chain.invoke(self.topic)
@@ -141,9 +155,10 @@ if __name__ == "__main__":
     
     embed_config = {
         "model_name": "textembedding-gecko@003",
-        "project": "YOUR-PROJECT-ID-HERE",
-        "location": "us-central1"
+        "project": "radicalai",
+        "location": "europe-west2"
     }
+
     
     screen = st.empty()
     with screen.container():
@@ -171,8 +186,10 @@ if __name__ == "__main__":
                 st.write(topic_input)
                 
                 # Test the Quiz Generator
-                generator = QuizGenerator(topic_input, questions, chroma_creator)
+                generator = QuizGenerator(topic_input, questions, chroma_creator.db)
                 question = generator.generate_question_with_vectorstore()
+                print(question)
+                print(json.loads(question))
 
     if question:
         screen.empty()

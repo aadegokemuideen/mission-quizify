@@ -78,6 +78,7 @@ class ChromaCollectionCreator:
         self.db =  Chroma.from_documents(texts,self.embed_model)
         
         
+        
         if self.db:
             st.success("Successfully created Chroma Collection!", icon="✅")
         else:

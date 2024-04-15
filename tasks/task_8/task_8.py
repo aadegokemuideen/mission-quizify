@@ -128,12 +128,12 @@ class QuizGenerator:
 
         for _ in range(self.num_questions):
             ##### YOUR CODE HERE #####
-            question_str = self.generate_question_with_vectorstore()# Use class method to generate question
+            each_question_str = self.generate_question_with_vectorstore() # Use class method to generate question
             
             ##### YOUR CODE HERE #####
             try:
                 # Convert the JSON String to a dictionary
-                question = json.loads(question_str)
+                question = json.loads(each_question_str)
             except json.JSONDecodeError:
                 print("Failed to decode question JSON.")
                 continue  # Skip this iteration if JSON decoding fails
@@ -149,13 +149,21 @@ class QuizGenerator:
                 print("Duplicate or invalid question detected.")
             ##### YOUR CODE HERE #####
                 while not self.validate_question(question):
-                    question_str = self.generate_question_with_vectorstore()
+                    each_question_str = self.generate_question_with_vectorstore()
+                    print(self.validate_question(question))
                     try:
                     # Convert the JSON String to a dictionary
-                        question = json.loads(question_str)
+                        question = json.loads(each_question_str)
+                        if self.validate_question(question):
+                             self.question_bank.append(question)
+                    
                     except json.JSONDecodeError:
                         print("Failed to decode question JSON.")
                         continue  # Skip this iteration if JSON decoding fails
+                #if self.num_questions == len(self.question_bank):
+                   #return self.question_bank
+                
+                continue
 
         return self.question_bank
 
@@ -188,7 +196,7 @@ class QuizGenerator:
            # q = q['question'].lower().strip().translate(str.maketrans('', '', string.punctuation))
            # quest = quest.lower().strip().translate(str.maketrans('', '', string.punctuation))
             if q['question'] == quest:
-                print(q = quest)
+                #print(q == quest)
                 is_unique = False
                 return is_unique
         is_unique = True

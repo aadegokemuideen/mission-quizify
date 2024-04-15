@@ -28,7 +28,11 @@ class QuizManager:
         """
         ##### YOUR CODE HERE #####
        # pass # Placeholder
-        self. questions = questions
+        self.questions = questions
+        self.total_questions = len(questions)
+        #self.questions_index = 0
+        
+      #  st.session_state["question_index"] = 0
     ##########################################################
 
     def get_question_at_index(self, index: int):
@@ -64,10 +68,17 @@ class QuizManager:
         """
         ##### YOUR CODE HERE #####
         #pass  # Placeholder for implementation 
-        old_index = st.session_state["question_index"]  
-        new_index = old_index + direction
-        st.session_state["question_index"] = new_index
-        (new_index ) % self.total_questions
+        #current_index = self.questions_index #st.session_state.question_index  # Step 3: Retrieve the current question index from Streamlit's session state. 
+        #st.session_state['question_index'] = self.questions_index
+        #print("previous", self.questions_index)
+        #self.questions_index +=  direction
+        #print("current",self.questions_index)
+        #new_index = current_index + direction
+        if "question_index" not in st.session_state:
+            st.session_state["question_index"] = 0
+        st.session_state["question_index"] = st.session_state["question_index"] + direction
+        st.session_state["question_index"] =  st.session_state["question_index"] % self.total_questions  #(self.questions_index)
+        #print(st.session_state.question_index)
         
 
     ##########################################################
@@ -78,8 +89,8 @@ if __name__ == "__main__":
     
     embed_config = {
         "model_name": "textembedding-gecko@003",
-        "project": "YOUR-PROJECT-ID-HERE",
-        "location": "us-central1"
+        "project": "radicalai",
+        "location": "europe-west2"
     }
     
     screen = st.empty()
@@ -119,7 +130,7 @@ if __name__ == "__main__":
             
             # Task 9
             ##########################################################
-            quiz_manager = QuizManager() # Use our new QuizManager class
+            quiz_manager = QuizManager(question_bank) # Use our new QuizManager class
             # Format the question and display
             with st.form("Multiple Choice Question"):
                 ##### YOUR CODE HERE #####
@@ -133,17 +144,21 @@ if __name__ == "__main__":
                     # Set the key from the index question 
                     # Set the value from the index question
                     ##### YOUR CODE HERE #####
+                    key =  choice["key"]
+                    value = choice['value']
+                    
                     choices.append(f"{key}) {value}")
                 
                 ##### YOUR CODE HERE #####
                 # Display the question onto streamlit
                 ##### YOUR CODE HERE #####
                 
+                
                 answer = st.radio( # Display the radio button with the choices
                     'Choose the correct answer',
                     choices
                 )
-                st.form_submit_button("Submit")
+                submitted = st.form_submit_button("Submit")
                 
                 if submitted: # On click submit 
                     correct_answer_key = index_question['answer']
@@ -151,4 +166,6 @@ if __name__ == "__main__":
                         st.success("Correct!")
                     else:
                         st.error("Incorrect!")
+                        
+                       
             ##########################################################

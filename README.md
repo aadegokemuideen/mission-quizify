@@ -2,8 +2,8 @@
 Hello! My name is Muideen Adegoke, and I hold a PhD in Electrical Engineering. My expertise lies in learning algorithms and neural network models under imperfect implementations. During my PhD, I developed several innovative algorithms and implemented them using Python and MATLAB. My work extensively involved statistical techniques, linear algebra, Graph Neural Networks, and optimization methods.
 
 I am currently a Research Fellow at the University of Hertfordshire, UK, where I focus on applied machine learning applications. My projects include building energy use prediction, pollution avoidance support systems (PASS), air pollution analysis, Graph theory and application, and object detection applications. These projects have allowed me to master various tools and technologies, including Python, Pandas, NumPy, Scikit-learn, Linux, MongoDB, Terraform, AWS, Git, Jira, OpenCV, TensorFlow, Keras, PyTorch, NLTK, JavaScript, React, HTML, and CSS.
-Current Project: ReX/Gemini-Quizify - The AI Coach
-Overview
+
+**Current Project: ReX/Gemini-Quizify - The AI Coach**
 
 ## Overview
 

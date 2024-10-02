@@ -12,12 +12,12 @@ class QuizManager:
     ##########################################################
     def __init__(self, questions: list):
         """
-        Task: Initialize the QuizManager class with a list of quiz questions.
+        Initialize the QuizManager class with a list of quiz questions.
 
         Overview:
         This task involves setting up the `QuizManager` class by initializing it with a list of quiz question objects. Each quiz question object is a dictionary that includes the question text, multiple choice options, the correct answer, and an explanation. The initialization process should prepare the class for managing these quiz questions, including tracking the total number of questions.
 
-        Instructions:
+        To-DO:
         1. Store the provided list of quiz question objects in an instance variable named `questions`.
         2. Calculate and store the total number of questions in the list in an instance variable named `total_questions`.
 
@@ -37,7 +37,7 @@ class QuizManager:
 
     def get_question_at_index(self, index: int):
         """
-        Retrieves the quiz question object at the specified index. If the index is out of bounds,
+        Here, I retrieves the quiz question object at the specified index. If the index is out of bounds,
         it restarts from the beginning index.
 
         :param index: The index of the question to retrieve.
@@ -50,12 +50,12 @@ class QuizManager:
     ##########################################################
     def next_question_index(self, direction=1):
         """
-        Task: Adjust the current quiz question index based on the specified direction.
+        Adjust the current quiz question index based on the specified direction.
 
         Overview:
-        Develop a method to navigate to the next or previous quiz question by adjusting the `question_index` in Streamlit's session state. This method should account for wrapping, meaning if advancing past the last question or moving before the first question, it should continue from the opposite end.
+        I develop a method to navigate to the next or previous quiz question by adjusting the `question_index` in Streamlit's session state. This method should account for wrapping, meaning if advancing past the last question or moving before the first question, it should continue from the opposite end.
 
-        Instructions:
+        ToDO:
         1. Retrieve the current question index from Streamlit's session state.
         2. Adjust the index based on the provided `direction` (1 for next, -1 for previous), using modulo arithmetic to wrap around the total number of questions.
         3. Update the `question_index` in Streamlit's session state with the new, valid index.
@@ -128,30 +128,26 @@ if __name__ == "__main__":
         with st.container():
             st.header("Generated Quiz Question: ")
             
-            # Task 9
+            # 
             ##########################################################
             quiz_manager = QuizManager(question_bank) # Use our new QuizManager class
             # Format the question and display
             with st.form("Multiple Choice Question"):
-                ##### YOUR CODE HERE #####
+                
                 index_question = quiz_manager.get_question_at_index(index = 0)# Use the get_question_at_index method to set the 0th index
-                ##### YOUR CODE HERE #####
+                
                 
                 # Unpack choices for radio
                 choices = []
                 for choice in index_question['choices']: # For loop unpack the data structure
-                    ##### YOUR CODE HERE #####
+                    
                     # Set the key from the index question 
                     # Set the value from the index question
-                    ##### YOUR CODE HERE #####
                     key =  choice["key"]
                     value = choice['value']
                     
                     choices.append(f"{key}) {value}")
                 
-                ##### YOUR CODE HERE #####
-                # Display the question onto streamlit
-                ##### YOUR CODE HERE #####
                 
                 
                 answer = st.radio( # Display the radio button with the choices

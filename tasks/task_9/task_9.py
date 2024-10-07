@@ -17,7 +17,7 @@ class QuizManager:
         Overview:
         This task involves setting up the `QuizManager` class by initializing it with a list of quiz question objects. Each quiz question object is a dictionary that includes the question text, multiple choice options, the correct answer, and an explanation. The initialization process should prepare the class for managing these quiz questions, including tracking the total number of questions.
 
-        To-DO:
+        What I did:
         1. Store the provided list of quiz question objects in an instance variable named `questions`.
         2. Calculate and store the total number of questions in the list in an instance variable named `total_questions`.
 
@@ -26,8 +26,8 @@ class QuizManager:
 
         Note: This initialization method is crucial for setting the foundation of the `QuizManager` class, enabling it to manage the quiz questions effectively. The class will rely on this setup to perform operations such as retrieving specific questions by index and navigating through the quiz.
         """
-        ##### YOUR CODE HERE #####
-       # pass # Placeholder
+         
+        #pass # Placeholder
         self.questions = questions
         self.total_questions = len(questions)
         #self.questions_index = 0
@@ -55,7 +55,7 @@ class QuizManager:
         Overview:
         I develop a method to navigate to the next or previous quiz question by adjusting the `question_index` in Streamlit's session state. This method should account for wrapping, meaning if advancing past the last question or moving before the first question, it should continue from the opposite end.
 
-        ToDO:
+        What I did:
         1. Retrieve the current question index from Streamlit's session state.
         2. Adjust the index based on the provided `direction` (1 for next, -1 for previous), using modulo arithmetic to wrap around the total number of questions.
         3. Update the `question_index` in Streamlit's session state with the new, valid index.
@@ -66,7 +66,7 @@ class QuizManager:
 
         Note: Ensure that `st.session_state["question_index"]` is initialized before calling this method. This navigation method enhances the user experience by providing fluid access to quiz questions.
         """
-        ##### YOUR CODE HERE #####
+        
         #pass  # Placeholder for implementation 
         #current_index = self.questions_index #st.session_state.question_index  # Step 3: Retrieve the current question index from Streamlit's session state. 
         #st.session_state['question_index'] = self.questions_index

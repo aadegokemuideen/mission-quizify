@@ -24,7 +24,7 @@ class DocumentProcessor:
         Given:
         - Handling of temporary files with unique names to avoid conflicts.
         
-        Your Steps:
+        How I implemeted this case:
         1. Utilize the Streamlit file uploader widget to allow users to upload PDF files.
            Hint: Look into st.file_uploader() with the 'type' parameter set to 'pdf'.
         2. For each uploaded PDF file:

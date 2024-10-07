@@ -4,7 +4,7 @@ from langchain_google_vertexai import VertexAIEmbeddings
 
 class EmbeddingClient:
     """
-    Task: Initialize the EmbeddingClient class to connect to Google Cloud's VertexAI for text embeddings.
+    What I did: Initialize the EmbeddingClient class to connect to Google Cloud's VertexAI for text embeddings.
 
     The EmbeddingClient class should be capable of initializing an embedding client with specific configurations
     for model name, project, and location. Your task is to implement the __init__ method based on the provided
@@ -22,11 +22,9 @@ class EmbeddingClient:
     - project: The Google Cloud project ID where the embedding model is hosted.
     - location: The location of the Google Cloud project, such as 'us-central1'.
 
-    Instructions:
+    Done:
     - Carefully initialize the 'self.client' with VertexAIEmbeddings in the __init__ method using the parameters.
     - Pay attention to how each parameter is used to configure the embedding client.
-
-    Note: The 'embed_query' method has been provided for you. Focus on correctly initializing the class.
     """
     
     def __init__(self, model_name, project, location):
